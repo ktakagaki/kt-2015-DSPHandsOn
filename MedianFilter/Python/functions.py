@@ -123,7 +123,20 @@ def medianSinPlot( waveNumber, windowLength ):
     plt.plot( data )
     plt.plot( datafiltered )
     plt.plot( data-datafiltered ) 
+
     
+    
+#Plot all calculated waves, the sine wave, the filtered wave and the difference between bot waves  
+def medianSinPlotNoised( waveNumber, windowLength ):
+    data = np.fromfunction( lambda x: np.sin((x-windowLength / 2)/128 * 2 * np.pi * waveNumber), (128 + windowLength / 2, ) )   #creating an array with a sine wave
+    noise = np.random.normal(0,0.2,128)
+    data = data + nois
+    datafiltered = medianFilter(data, windowLength)  #calculate the filtered wave with the medianFiltered function
+    data = data[ windowLength / 2 : -windowLength  ] # slice the data array to synchronize both waves
+    datafiltered = datafiltered[ : len(data) ]       # cut the filtered wave to the same length as the data wave
+    plt.plot( data )
+    plt.plot( datafiltered )
+    plt.plot( data-datafiltered ) 
     
     
     
@@ -135,13 +148,13 @@ def medianSinPlot( waveNumber, windowLength ):
 def medianSinPlotNoised( waveNumber, windowLength ):
     data = np.fromfunction( lambda x: np.sin((x-windowLength / 2)/128 * 2 * np.pi * waveNumber), (128 + windowLength / 2, ) ) #creating an array with a sine wave
     noise = np.random.normal(0,0.2,(128 + windowLength / 2))       # creating the noise as an array, filled with random numbers, with the same length as the data array
-    signal = data + noise                                          # generate the noised signal
-    datafiltered = medianFilter(signal, windowLength)              #calculate the filtered wave with the medianFiltered function
-    signal = signal[ windowLength / 2 : - windowLength ]           # slice the data array to synchronize both waves
-    datafiltered = datafiltered[ : len(signal) ]                   # cut the filtered wave to the same length as the data wave
-    plt.plot( signal )
+    data = data + noise                                          # generate the noised signal
+    datafiltered = medianFilter(data, windowLength)              #calculate the filtered wave with the medianFiltered function
+    data = data[ windowLength / 2 : - windowLength ]           # slice the data array to synchronize both waves
+    datafiltered = datafiltered[ : len(data) ]                   # cut the filtered wave to the same length as the data wave
+    plt.plot( data )
     plt.plot( datafiltered )
-    plt.plot( signal-datafiltered )
+    plt.plot( data-datafiltered )
     
     
     
@@ -204,10 +217,10 @@ def medianSinPlot1024( waveNumber, windowLength ):
 def medianSinPlotNoised1024( waveNumber, windowLength ):
     data = np.fromfunction( lambda x: np.sin((x-windowLength / 2)/1024 * 2 * np.pi * waveNumber), (1024 + windowLength / 2, ) ) #creating an array with a sine wave
     noise = np.random.normal(0,0.2,(128 + windowLength / 2))       # creating the noise as an array, filled with random numbers, with the same length as the data array
-    signal = data + noise                                          # generate the noised signal
-    datafiltered = medianFilter(signal, windowLength)              #calculate the filtered wave with the medianFiltered function
-    signal = signal[ windowLength / 2 : - windowLength ]           # slice the data array to synchronize both waves
-    datafiltered = datafiltered[ : len(signal) ]                   # cut the filtered wave to the same length as the data wave
-    plt.plot( signal )
+    data = data + noise                                          # generate the noised signal
+    datafiltered = medianFilter(data, windowLength)              #calculate the filtered wave with the medianFiltered function
+    data = data[ windowLength / 2 : - windowLength ]           # slice the data array to synchronize both waves
+    datafiltered = datafiltered[ : len(data) ]                   # cut the filtered wave to the same length as the data wave
+    plt.plot( data )
     plt.plot( datafiltered )
-    plt.plot( signal-datafiltered )
+    plt.plot( data-datafiltered )
