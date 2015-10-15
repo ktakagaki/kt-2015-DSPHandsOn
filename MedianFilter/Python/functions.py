@@ -15,8 +15,8 @@ import matplotlib.pylab as __plt
 #Calculate the the median filtered wave with defined window length 
 def __medianFilter( data, windowLength ): 
     if (windowLength < len(data)and data.ndim == 1):
-        tempret = __np.zeros(len(data)-windowLength+1)  # creating an array where the filtered values will be saved in
-        if windowLength % 2 ==0:                      # check if the window length is odd or even because with even window length we get an unsynchrone filtered wave 
+        tempret = __np.zeros(len(data)-windowLength+1)                      # creating an array where the filtered values will be saved in
+        if windowLength % 2 ==0:                                            # check if the window length is odd or even because with even window length we get an unsynchrone filtered wave 
             for c in range(0, len(tempret)):
                 tempret[c] = __np.median( data[ c : c + windowLength +1 ] ) # write the values of the median filtered wave in tempret, calculate the median of all values in the window
             return tempret
@@ -29,7 +29,7 @@ def __medianFilter( data, windowLength ):
 
 #
 def __medianFilterPlotterImpl( data, windowLength ):
-    datafiltered = __medianFilter(data, windowLength)              #calculate the filtered wave with the medianFiltered function
+    datafiltered = __medianFilter(data, windowLength)            #calculate the filtered wave with the medianFiltered function
     data = data[ windowLength / 2 : - windowLength ]             # slice the data array to synchronize both waves
     datafiltered = datafiltered[ : len(data) ]                   # cut the filtered wave to the same length as the data wave
     __plt.plot( data )
@@ -53,18 +53,18 @@ def medianSinPlotNoised( waveNumber, windowLength ):
 
 #Calculate the error rate of the filtered wave  with different windowLength and defined wave number       
 def __ErrorRateWindow(data, datafiltered, windowLength):
-    errorrate = data-datafiltered  #calculate the difference between the sine wave and the filtered wave
-    error = [] #creating a list and save the error rate with the matching wavenumber in it 
+    errorrate = data-datafiltered                     #calculate the difference between the sine wave and the filtered wave
+    error = []                                        #creating a list and save the error rate with the matching wavenumber in it 
     errorrate = __np.abs(errorrate)
     error.append([windowLength ,__np.mean(errorrate)])# fill the list with the errorrate and corresponding wave number
-    error = zip(*error) #zip the error ([1,1],[2,2],[3,3]) = ([1,2,3],[1,2,3])
+    error = zip(*error)                               #zip the error ([1,1],[2,2],[3,3]) = ([1,2,3],[1,2,3])
     return error
 
 
 def __windowErrorPlotterImpl(data,windowLength):
-    datafiltered = __medianFilter(data, windowLength)  #calculate the filtered wave with the medianFiltered function
-    data = data[ windowLength / 2 : - windowLength ] # slice the data array to synchronize both waves
-    datafiltered = datafiltered[ : len(data) ]       # cut the filtered wave to the same length as the data wave
+    datafiltered = __medianFilter(data, windowLength)         #calculate the filtered wave with the medianFiltered function
+    data = data[ windowLength / 2 : - windowLength ]          # slice the data array to synchronize both waves
+    datafiltered = datafiltered[ : len(data) ]                # cut the filtered wave to the same length as the data wave
     error = __ErrorRateWindow(data,datafiltered,windowLength) #calculate the error with the ErrorRate function
     __plt.axis([0, windowLength + 1, 0, 1.2])
     __plt.xlabel('Window Length', fontsize = 20)
@@ -87,18 +87,18 @@ def ErrorPlotWindowNoised( waveNumber,windowLength ):
  
 #Calculate the error rate of the filtered wave  with different wave number and defined window length      
 def __ErrorRateWave(data,datafiltered, waveNumber):
-    errorrate = data-datafiltered  #calculate the difference between the sine wave and the filtered wave
-    error = [] #creating a list and save the error rate with the matching wave number in it 
+    errorrate = data-datafiltered                   #calculate the difference between the sine wave and the filtered wave
+    error = []                                      #creating a list and save the error rate with the matching wave number in it 
     errorrate = __np.abs(errorrate)
     error.append([waveNumber ,__np.mean(errorrate)])# fill the list with the errorrate and corresponding wave number
-    error = zip(*error) #zip the error ([1,1],[2,2],[3,3]) = ([1,2,3],[1,2,3])
+    error = zip(*error)                             #zip the error ([1,1],[2,2],[3,3]) = ([1,2,3],[1,2,3])
     return error   
     
  
 def __waveErrorPlotterImpl(data,waveNumber,windowLength):
-    datafiltered = __medianFilter(data, windowLength)  #calculate the filtered wave with the medianFiltered function
-    data = data[ windowLength / 2 : - windowLength ] # slice the data array to synchronize both waves
-    datafiltered = datafiltered[ : len(data) ]       # cut the filtered wave to the same length as the data wave
+    datafiltered = __medianFilter(data, windowLength)                  #calculate the filtered wave with the medianFiltered function
+    data = data[ windowLength / 2 : - windowLength ]                   # slice the data array to synchronize both waves
+    datafiltered = datafiltered[ : len(data) ]                         # cut the filtered wave to the same length as the data wave
     error = __ErrorRateWave(data,datafiltered,windowLength,waveNumber) #calculate the error with the ErrorRate function
     __plt.axis([0, waveNumber + 1, 0, 1.2])
     __plt.xlabel('Wave number', fontsize = 20)
@@ -151,5 +151,5 @@ def medianSinPlot1024( waveNumber, windowLength ):
 def medianSinPlotNoised1024( waveNumber, windowLength ):
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ) ) #creating an array with a sine wave
     noise = __np.random.normal(0,0.2,(1024 + windowLength / 2))       # creating the noise as an array, filled with random numbers, with the same length as the data array
-    data = data + noise                                          # generate the noised signal
+    data = data + noise                                               # generate the noised signal
     __medianFilterPlotterImpl(data,windowLength)
