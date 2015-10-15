@@ -39,12 +39,14 @@ def __medianFilterPlotterImpl( data, windowLength ):
 
 #Plot all calculated waves, the sine wave, the filtered wave and the difference between bot waves  
 def medianSinPlot( waveNumber, windowLength ):
+    """ Plots a sine wave, the  medain filtered and the difference between sine and median filtered wave """   
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/128 * 2 * __np.pi * waveNumber), (128 + windowLength / 2, ) )   #creating an array with a sine wave
     __medianFilterPlotterImpl(data,windowLength) 
     
     
 #Plot all calculated waves, the sine wave, the filtered wave and the difference between bot waves  
 def medianSinPlotNoised( waveNumber, windowLength ):
+    """ Plots a noised sine wave, the  medain filtered and the difference between sine and median filtered wave """ 
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/128 * 2 * __np.pi * waveNumber), (128 + windowLength / 2, ) )   #creating an array with a sine wave
     noise = __np.random.normal(0,0.2,(128 + windowLength / 2))
     data = data + noise
@@ -74,11 +76,13 @@ def __windowErrorPlotterImpl(data,windowLength):
 
 #Plots the error of the median filter with different windowLength and a defined wave number
 def ErrorPlotWindow( waveNumber,windowLength ):
+    """ Plots the Errror(mean of the absolute from sine wave - filtered wave) of the median filter, with different window lengths and fixed wave number"""
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/128 * 2 * __np.pi * waveNumber), (128 + windowLength / 2, ) )    #creating an array with a sine wave
     __windowErrorPlotterImpl(data,windowLength)
     
 
 def ErrorPlotWindowNoised( waveNumber,windowLength ):
+    """ Plots the Errror(mean of the absolute from sine wave - filtered wave) of the median filter, with different window lengths and fixed wave number, sine wave is noised"""
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/128 * 2 * __np.pi * waveNumber), (128 + windowLength / 2, ) )
     noise =__np.random.normal(0,0.5,(128 + windowLength / 2))
     data = data + noise
@@ -108,12 +112,14 @@ def __waveErrorPlotterImpl(data,waveNumber,windowLength):
   
 #Plots the error  of the median filter with different wave number and a defined window length      
 def ErrorPlotWave(waveNumber,windowLength):
+    """ Plots the Errror(mean of the absolute from sine wave - filtered wave) of the median filter, with different wave number and fixed window length"""
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/128 * 2 * __np.pi * waveNumber), (128 + windowLength / 2, ) )    #creating an array with a sine wave
     __waveErrorPlotterImpl(data,waveNumber,windowLength)
 
     
 #Plots the error  of the median filtered, noised with different wave number and a defined window length     
 def ErrorplotWaveNoised( waveNumber, windowLength ):
+    """ Plots the Errror(mean of the absolute from sine wave - filtered wave) of the median filter, with different wave number and fixed window length, sine wave is noised"""
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/128 * 2 * __np.pi * waveNumber), (128 + windowLength / 2, ) )
     noise = __np.random.normal(0,0.5,(128 + windowLength / 2))
     data = data + noise
@@ -129,27 +135,33 @@ def ErrorplotWaveNoised( waveNumber, windowLength ):
 
     
 """Because of problems with the low number of samples, I define the same functions with 1024 samples instead of 128."""
+              
+#Plot all calculated waves, the sine wave, the filtered wave and the difference between bot waves  
+def medianSinPlot1024( waveNumber, windowLength ):
+    """ Plots a sine wave, the  medain filtered and the difference between sine and median filtered wave with 1024 samples """
+    data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ) )   #creating an array with a sine wave
+    __medianFilterPlotterImpl(data,windowLength)
+
+
+#Calculate a noised sine wave to get a more realistic wave
+def medianSinPlotNoised1024( waveNumber, windowLength ):
+    """ Plots a noised sine wave, the  medain filtered and the difference between sine and median filtered wave with 1024 samples"""
+    data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ) ) #creating an array with a sine wave
+    noise = __np.random.normal(0,0.2,(1024 + windowLength / 2))       # creating the noise as an array, filled with random numbers, with the same length as the data array
+    data = data + noise                                               # generate the noised signal
+    __medianFilterPlotterImpl(data,windowLength)
+
+
 #Plots the error of the median filter with different windowLength and a defined wave number
 def ErrorPlotWindow1024( waveNumber,windowLength ):
+    """ Plots the Errror(mean of the absolute from sine wave - filtered wave) of the median filter, with different window lengths and fixed wave number, the waves are plotted with 1024"""
     data = __np.fromfunction(lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ))    #creating an array with a sine wave
     __windowErrorPlotterImpl(data,windowLength)
     
       
 #Plots the error  of the median filter with different wave number and a defined window length      
 def ErrorPlotWave1024(waveNumber,windowLength):
+    """ Plots the Errror(mean of the absolute from sine wave - filtered wave) of the median filter, with different wave number and fixed window length, the waves are plotted with 1024"""
     data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ) )    #creating an array with a sine wave
     __waveErrorPlotterImpl(data,waveNumber,windowLength)
   
-              
-#Plot all calculated waves, the sine wave, the filtered wave and the difference between bot waves  
-def medianSinPlot1024( waveNumber, windowLength ):
-    data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ) )   #creating an array with a sine wave
-    __medianFilterPlotterImpl(data,windowLength)
-
-    
-#Calculate a noised sine wave to get a more realistic wave
-def medianSinPlotNoised1024( waveNumber, windowLength ):
-    data = __np.fromfunction( lambda x: __np.sin((x-windowLength / 2)/1024 * 2 * __np.pi * waveNumber), (1024 + windowLength / 2, ) ) #creating an array with a sine wave
-    noise = __np.random.normal(0,0.2,(1024 + windowLength / 2))       # creating the noise as an array, filled with random numbers, with the same length as the data array
-    data = data + noise                                               # generate the noised signal
-    __medianFilterPlotterImpl(data,windowLength)
