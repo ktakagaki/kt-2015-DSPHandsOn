@@ -103,7 +103,7 @@ def __waveErrorPlotterImpl(data,waveNumber,windowLength):
     datafiltered = __medianFilter(data, windowLength)                  #calculate the filtered wave with the medianFiltered function
     data = data[ windowLength / 2 : - windowLength ]                   # slice the data array to synchronize both waves
     datafiltered = datafiltered[ : len(data) ]                         # cut the filtered wave to the same length as the data wave
-    error = __ErrorRateWave(data,datafiltered,windowLength,waveNumber) #calculate the error with the ErrorRate function
+    error = __ErrorRateWave(data,datafiltered,waveNumber) #calculate the error with the ErrorRate function
     __plt.axis([0, waveNumber + 1, 0, 1.2])
     __plt.xlabel('Wave number', fontsize = 20)
     __plt.ylabel('Error rate', fontsize = 20)
