@@ -1,2 +1,2 @@
-# kt-2015-DSPHandsOn
-Repository for hands-on student tutorials in DSP and biomedical programming
+# ipython-notebook-git
+This package allows you to interact with the git repository of your IPython/Jupyter notebook
