@@ -7,46 +7,46 @@ You also can check the information of other notebooks, when you set the path by 
 Requierments: local git repository
               git python package installed
 """
-import os as __os
-import datetime as __datetime
-import sys as __sys
-from git import Repo as __Repo
+import os as _os
+import datetime as _datetime
+import sys as _sys
+from git import Repo as _Repo
 
 
-def __getFileDirectory():
-    fileDirectory = __os.path.dirname(__os.path.realpath('__file__')) #Set the file directoy  as directory of the currently used file
+def _getFileDirectory():
+    fileDirectory = _os.path.dirname(_os.path.realpath('_file_')) #Set the file directoy  as directory of the currently used file
     return fileDirectory
 
-def __findGitRepo(fileDirectory):
-    if __os.path.exists(fileDirectory + '\\.git') == True:  # Check if the file path is a git repository path
+def _findGitRepo(fileDirectory):
+    if _os.path.exists(fileDirectory + '\\.git') == True:  # Check if the file path is a git repository path
         return fileDirectory + '\\.git' 
     else:
-        parentPath = __os.path.abspath(__os.path.join(fileDirectory, __os.pardir))  #set the directory as parent directory
+        parentPath = _os.path.abspath(_os.path.join(fileDirectory, _os.pardir))  #set the directory as parent directory
         if fileDirectory == parentPath:        # if directory is the root directory, no git repository exists
             print 'No \.git repository found'
             return None
         else:
-            return __findGitRepo(parentPath)   #repeat the process until you find a git repository or the directory is the root directory
+            return _findGitRepo(parentPath)   #repeat the process until you find a git repository or the directory is the root directory
             
 
 
 def printInformation( filePath = '' ):
     """Plot important information about your notebook: Date, used Python version, git directory, git commit SHA, current remote and current branch"""
     if( filePath == '' ):
-        __printInformationImpl( __findGitRepo(__getFileDirectory()), 'this notebook' )
+        _printInformationImpl( _findGitRepo(_getFileDirectory()), 'this notebook' )
     else:
-        __printInformationImpl( __findGitRepo(filePath), filePath )
+        _printInformationImpl( _findGitRepo(filePath), filePath )
 
-def __printInformationImpl(filePath, targetString):
+def _printInformationImpl(filePath, targetString):
     mylist = []  
-    today = __datetime.date.today() 
+    today = _datetime.date.today() 
     mylist.append(today) #append the Date into a list, so it can be printed 
-    repo = __Repo(filePath) #represents your git repository path
+    repo = _Repo(filePath) #represents your git repository path
     print( 'Information about ' + targetString )
     print( '============================================================' )
     print( "Date: " +  str(mylist[0])  )
-    print( 'Python Version: ' + __sys.version )
-    print( 'Git directory: ' + __findGitRepo(filePath) )
+    print( 'Python Version: ' + _sys.version )
+    print( 'Git directory: ' + _findGitRepo(filePath) )
     print( 'Current git SHA: ' +  repo.commit().hexsha )
     print( 'Current remote: ' + str( repo.remote() ) )
     print( 'Current branch: ' + str(repo.active_branch)  )
@@ -57,12 +57,12 @@ def __printInformationImpl(filePath, targetString):
 def printCurrentBranch(filePath = ''):
     """Plot information about the current git branch"""
     if( filePath == '' ):
-        __currentBranchImpl( __findGitRepo(__getFileDirectory()) )
+        _currentBranchImpl( _findGitRepo(_getFileDirectory()) )
     else:
-        __currentBranchImpl( __findGitRepo(filePath) )
+        _currentBranchImpl( _findGitRepo(filePath) )
         
-def __currentBranchImpl(filePath):
-    repo = __Repo(filePath)
+def _currentBranchImpl(filePath):
+    repo = _Repo(filePath)
     print( 'Current branch: ' + str(repo.active_branch)  ) # print the current branch
         
     
@@ -70,12 +70,12 @@ def __currentBranchImpl(filePath):
 def printCurrentGitSHA(filePath = ''):
     """Plot information about the current git commit hash"""
     if( filePath == '' ):
-        __currentGitSHAImpl( __findGitRepo(__getFileDirectory()) )
+        _currentGitSHAImpl( _findGitRepo(_getFileDirectory()) )
     else:
-        __currentGitSHAImpl( __findGitRepo(filePath) )
+        _currentGitSHAImpl( _findGitRepo(filePath) )
     
-def __currentGitSHAImpl(filePath):
-     repo = __Repo(filePath)
+def _currentGitSHAImpl(filePath):
+     repo = _Repo(filePath)
      print( 'Current git SHA: ' +  repo.commit().hexsha ) #print the current git commit hash code
 
 
@@ -83,12 +83,12 @@ def __currentGitSHAImpl(filePath):
 def printCurrentRemote(filePath = ''):
     """Plot information about the current git remote"""
     if( filePath == '' ):
-        __currentRemoteImpl( __findGitRepo(__getFileDirectory()) )
+        _currentRemoteImpl( _findGitRepo(_getFileDirectory()) )
     else:
-        __currentRemoteImpl( __findGitRepo(filePath) )
+        _currentRemoteImpl( _findGitRepo(filePath) )
 
-def __currentRemoteImpl(filePath):
-    repo = __Repo(filePath)
+def _currentRemoteImpl(filePath):
+    repo = _Repo(filePath)
     print( 'Current remote: ' + str( repo.remote() ) ) #print the current remote of your repository
     
 
@@ -96,9 +96,9 @@ def __currentRemoteImpl(filePath):
 def printGitDirectory(filePath = ''):
     """Plot information about the current git directory"""
     if( filePath == '' ):
-        __gitDirectoryImpl( __findGitRepo(__getFileDirectory()) )
+        _gitDirectoryImpl( _findGitRepo(_getFileDirectory()) )
     else:
-        __gitDirectoryImpl( __findGitRepo(filePath) )
+        _gitDirectoryImpl( _findGitRepo(filePath) )
     
-def __gitDirectoryImpl(filePath):
-    print( 'Git directory: ' + __findGitRepo(filePath))  # print the directory, where the repository is saved
+def _gitDirectoryImpl(filePath):
+    print( 'Git directory: ' + _findGitRepo(filePath))  # print the directory, where the repository is saved
