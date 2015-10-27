@@ -65,6 +65,7 @@ def __printInformationImpl(filePath, targetString):
 
 def printCurrentBranch(filePath = ''):
     """Plot information about the current git branch"""
+    # Check if the file path is given or the package should search it by its own
     if( filePath == '' ):
         __currentBranchImpl( __findGitRepo(__getFileDirectory()) )
     else:
@@ -72,7 +73,7 @@ def printCurrentBranch(filePath = ''):
         
 def __currentBranchImpl(filePath):
     repo = __Repo(filePath)
-    print( 'Current branch: ' + str(repo.active_branch)  ) # print the current branch
+    print( 'Current branch: ' + str(repo.active_branch)  ) 
         
     
     
@@ -85,7 +86,7 @@ def printCurrentGitSHA(filePath = ''):
     
 def __currentGitSHAImpl(filePath):
      repo = __Repo(filePath)
-     print( 'Current git SHA: ' +  repo.commit().hexsha ) #print the current git commit hash code
+     print( 'Current git SHA: ' +  repo.commit().hexsha ) 
 
 
         
@@ -98,7 +99,7 @@ def printCurrentRemote(filePath = ''):
 
 def __currentRemoteImpl(filePath):
     repo = __Repo(filePath)
-    print( 'Current remote: ' + str( repo.remote() ) ) #print the current remote of your repository
+    print( 'Current remote: ' + str( repo.remote() ) ) 
     
 
 
@@ -110,4 +111,4 @@ def printGitDirectory(filePath = ''):
         __gitDirectoryImpl( __findGitRepo(filePath) )
     
 def __gitDirectoryImpl(filePath):
-    print( 'Git directory: ' + __findGitRepo(filePath))  # print the directory, where the repository is saved
+    print( 'Git directory: ' + __findGitRepo(filePath)) 
