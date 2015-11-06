@@ -4,8 +4,8 @@ This package allows you to add information to your Ipython notebook, if you're w
 It is usefull if you want to verify the notebook version.
 This package is collecting all information by its own, so you don't need to set any repository path.
 You also can check the information of other notebooks, when you set the path by your own.
-Requierments: local git repository
-              git python package installed
+Requierments: *local git repository
+              *git python package installed
 """
 import os as _os
 import datetime as _datetime
@@ -14,19 +14,24 @@ from git import Repo as _Repo
 
 
 def _getFileDirectory():
-    fileDirectory = _os.path.dirname(_os.path.realpath('_file_')) #Set the file directoy  as directory of the currently used file
+    #Set the file directoy  as directory of the currently used file
+    fileDirectory = _os.path.dirname(_os.path.realpath('_file_')) 
     return fileDirectory
 
 def _findGitRepo(fileDirectory):
-    if _os.path.exists(fileDirectory + '\\.git') == True:  # Check if the file path is a git repository path
+    #Check if the file path is a git repository path
+    if _os.path.exists(fileDirectory + '\\.git') == True:  
         return fileDirectory + '\\.git' 
     else:
-        parentPath = _os.path.abspath(_os.path.join(fileDirectory, _os.pardir))  #set the directory as parent directory
-        if fileDirectory == parentPath:        # if directory is the root directory, no git repository exists
+        #set the directory as parent directory
+        parentPath = _os.path.abspath(_os.path.join(fileDirectory, _os.pardir))
+        #if directory is the root directory, no git repository exists
+        if fileDirectory == parentPath:        
             print 'No \.git repository found'
             return None
         else:
-            return _findGitRepo(parentPath)   #repeat the process until you find a git repository or the directory is the root directory
+            #repeat the process until you find a git repository or the directory is the root directory
+            return _findGitRepo(parentPath)   
             
 
 
@@ -39,9 +44,11 @@ def printInformation( filePath = '' ):
 
 def _printInformationImpl(filePath, targetString):
     mylist = []  
-    today = _datetime.date.today() 
-    mylist.append(today) #append the Date into a list, so it can be printed 
-    repo = _Repo(filePath) #represents your git repository path
+    today = _datetime.date.today()
+    #append the Date into a list, so it can be printed
+    mylist.append(today) 
+    #represents your git repository path
+    repo = _Repo(filePath) 
     print( 'Information about ' + targetString )
     print( '============================================================' )
     print( "Date: " +  str(mylist[0])  )
@@ -63,7 +70,8 @@ def printCurrentBranch(filePath = ''):
         
 def _currentBranchImpl(filePath):
     repo = _Repo(filePath)
-    print( 'Current branch: ' + str(repo.active_branch)  ) # print the current branch
+    #print current branch
+    print( 'Current branch: ' + str(repo.active_branch)  )
         
     
     
@@ -76,8 +84,8 @@ def printCurrentGitSHA(filePath = ''):
     
 def _currentGitSHAImpl(filePath):
      repo = _Repo(filePath)
-     print( 'Current git SHA: ' +  repo.commit().hexsha ) #print the current git commit hash code
-
+     #print current git commit hash code
+     print( 'Current git SHA: ' +  repo.commit().hexsha ) 
 
         
 def printCurrentRemote(filePath = ''):
@@ -89,7 +97,8 @@ def printCurrentRemote(filePath = ''):
 
 def _currentRemoteImpl(filePath):
     repo = _Repo(filePath)
-    print( 'Current remote: ' + str( repo.remote() ) ) #print the current remote of your repository
+    #print current remote of your repository
+    print( 'Current remote: ' + str( repo.remote() ) ) 
     
 
 
@@ -101,4 +110,5 @@ def printGitDirectory(filePath = ''):
         _gitDirectoryImpl( _findGitRepo(filePath) )
     
 def _gitDirectoryImpl(filePath):
-    print( 'Git directory: ' + _findGitRepo(filePath))  # print the directory, where the repository is saved
+    #print directory, where the repository is saved
+    print( 'Git directory: ' + _findGitRepo(filePath))  
