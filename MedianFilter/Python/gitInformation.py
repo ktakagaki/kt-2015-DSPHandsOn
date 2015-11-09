@@ -56,17 +56,20 @@ def _printInformationImpl(filePath, targetString):
     # Append the Date into a list, so it can be printed.
     mylist.append(today) 
     # Represents your git repository path.
-    repo = _Repo(filePath) 
+    repo = _Repo(filePath)
+    current_remote = str(repo.remotes[0])
     print('Information about ' + targetString)
     print('============================================================')
     print("Date: " +  str(mylist[0]))
     print('Python Version: ' + _sys.version)
     print('Git directory: ' + _findGitRepo(filePath))
     print('Current git SHA: ' +  repo.commit().hexsha)
-    print('Current remote: ' + str(repo.remote() ) + '(' + 
-          str(repo.remotes.origin.url) + ')')
+    print('Current remote: ' + str(repo.remote(name = current_remote)))
     print('Current branch: ' + str(repo.active_branch))
-    
+    if str(repo.remote()) == 'origin':    
+        print('origin remote URL: ' + str(repo.remotes.origin.url))
+    else: 
+        print('Can\'t plot origin URL, no origin remote found.')
 # with the following functions you are able to print single
 # information about the notebook and repository.
 
@@ -91,7 +94,7 @@ def printCurrentGitSHA(filePath = ''):
     
 def _currentGitSHAImpl(filePath):
      repo = _Repo(filePath)
-     #print current git commit hash code
+     # Print current git commit hash code.
      print( 'Current git SHA: ' +  repo.commit().hexsha) 
       
 def printCurrentRemote(filePath = ''):
