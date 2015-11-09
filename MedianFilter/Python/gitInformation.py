@@ -18,7 +18,6 @@ import sys as _sys
 
 from git import Repo as _Repo
 
-
 def _getFileDirectory():
     # Set the file directoy  as directory of the currently used file.
     fileDirectory = _os.path.dirname(_os.path.realpath('_file_')) 
@@ -64,9 +63,10 @@ def _printInformationImpl(filePath, targetString):
     print('Python Version: ' + _sys.version)
     print('Git directory: ' + _findGitRepo(filePath))
     print('Current git SHA: ' +  repo.commit().hexsha)
-    print('Current remote: ' + str(repo.remote()))
+    print('Current remote: ' + str(repo.remote() ) + '(' + 
+          str(repo.remotes.origin.url) + ')')
     print('Current branch: ' + str(repo.active_branch))
-
+    
 # with the following functions you are able to print single
 # information about the notebook and repository.
 
