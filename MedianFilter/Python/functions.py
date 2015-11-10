@@ -153,7 +153,8 @@ def ErrorplotWaveNoised(waveNumber, windowLength, samples=128):
 #                  loc='lower center', ncol=3, labelspacing=0)
 #     _plt.tight_layout()
 #     
-# def medianSinPlotLegend(waveNumber, windowLength, samples=128, plotStart=0, plotEnd=-1):
+# def medianSinPlotLegend(waveNumber, windowLength, samples=128, plotStart=0,
+#                         plotEnd=-1):
 #     """ Plot a sine wave, the  medain filtered and the difference between
 #     sine and median filtered wave.
 #     """ 
