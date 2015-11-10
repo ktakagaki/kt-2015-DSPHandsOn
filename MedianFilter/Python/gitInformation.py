@@ -57,19 +57,20 @@ def _printInformationImpl(filePath, targetString):
     mylist.append(today) 
     # Represents your git repository path.
     repo = _Repo(filePath)
-    current_remote = str(repo.remotes[0])
     print('Information about ' + targetString)
     print('============================================================')
     print("Date: " +  str(mylist[0]))
     print('Python Version: ' + _sys.version)
     print('Git directory: ' + _findGitRepo(filePath))
     print('Current git SHA: ' +  repo.commit().hexsha)
-    print('Current remote: ' + str(repo.remote(name = current_remote)))
-    print('Current branch: ' + str(repo.active_branch))
-    if str(repo.remote()) == 'origin':    
-        print('origin remote URL: ' + str(repo.remotes.origin.url))
-    else: 
-        print('Can\'t plot origin URL, no origin remote found.')
+    print 'Remotes:',
+    for r in repo.remotes:
+        print r.name + ',',
+    print('\n'+'Current branch: ' + str(repo.active_branch))
+    for r in repo.remotes:
+        exec( 'tempLoop = repo.remotes.' + r.name + '.url')
+        print('%s remote URL: ' % (r.name) + tempLoop)
+
 # with the following functions you are able to print single
 # information about the notebook and repository.
 

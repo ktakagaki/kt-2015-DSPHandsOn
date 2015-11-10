@@ -71,7 +71,7 @@ def _ErrorRateWindow(data, datafiltered, windowLength):
 def _windowErrorPlotterImpl(data, windowLength):
     # Calculate the filtered wave with the medianFiltered function.
     datafiltered = _medianFilter(data, windowLength) 
-    error = _ErrorRateWindow(data,datafiltered, windowLength) 
+    error = _ErrorRateWindow(data,datafiltered, windowLength)
     _plt.axis([0, windowLength+1, 0, 1.2])
     _plt.xlabel('Window Length', fontsize=13)
     _plt.ylabel('resolution', fontsize=13)
@@ -136,3 +136,29 @@ def ErrorplotWaveNoised(waveNumber, windowLength, samples=128):
     noise = _np.random.normal(0, 0.5,len(data))
     data = data + noise
     _waveErrorPlotterImpl(data, waveNumber)
+    
+    
+#==============================================================================
+#        
+# def _medianFilterPlotterImplLegend(data, windowLength, plotStart, plotEnd):
+#     # Calculate the filtered wave with the medianFiltered function.
+#     datafiltered = _medianFilter(data, windowLength)
+#     data = data[plotStart : plotEnd]
+#     datafiltered = datafiltered[plotStart : plotEnd]                     
+#     p1 = _plt.plot(data)
+#     p2 = _plt.plot(datafiltered)
+#     p3 = _plt.plot(data - datafiltered)
+#     _plt.legend((p1[0], p2[0], p3[0]), 
+#                 ('Sine wave','Filtered wave', 'Resolution'),
+#                  loc='lower center', ncol=3, labelspacing=0)
+#     _plt.tight_layout()
+#     
+# def medianSinPlotLegend(waveNumber, windowLength, samples=128, plotStart=0, plotEnd=-1):
+#     """ Plot a sine wave, the  medain filtered and the difference between
+#     sine and median filtered wave.
+#     """ 
+#     time = _np.linspace(0,2,samples)
+#     # Creating an array with sine waves.
+#     data = _np.sin(_np.pi* time *waveNumber) 
+#     _medianFilterPlotterImplLegend(data,windowLength,plotStart, plotEnd)
+#==============================================================================
