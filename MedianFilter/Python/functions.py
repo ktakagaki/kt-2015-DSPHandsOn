@@ -30,10 +30,11 @@ def _medianFilterPlotterImpl(data, windowLength, plotStart, plotEnd):
     # Calculate the filtered wave with the medianFiltered function.
     datafiltered = _medianFilter(data, windowLength)
     data = data[plotStart : plotEnd]
-    datafiltered = datafiltered[plotStart : plotEnd]                     
+    datafiltered = datafiltered[plotStart : plotEnd]
+    _plt.axis([0, len(data), -1.5, 1.5])                 
     _plt.plot(data)
-    _plt.plot(datafiltered)
-    _plt.plot(data - datafiltered)
+    _plt.plot(datafiltered, )
+    _plt.plot(data - datafiltered, linewidth = 1.9)
     
 def medianSinPlot(waveNumber, windowLength, samples=128, plotStart=0, plotEnd=-1):
     """ Plot a sine wave, the  medain filtered and the difference between
@@ -68,14 +69,23 @@ def _ErrorRateWindow(data, datafiltered, windowLength):
     error = zip(*error)                              
     return error
 
-def _windowErrorPlotterImpl(data, windowLength):
+def _windowErrorPlotterImpl(data, windowLength, waveNumber):
     # Calculate the filtered wave with the medianFiltered function.
     datafiltered = _medianFilter(data, windowLength) 
     error = _ErrorRateWindow(data,datafiltered, windowLength)
-    _plt.axis([0, windowLength+1, 0, 1.2])
-    _plt.xlabel('Window Length', fontsize=13)
-    _plt.ylabel('resolution', fontsize=13)
-    _plt.scatter(*error)
+    error = _np.asarray(error)
+    error[1:] = error[1:]/0.63662
+    
+    ax = _plt.subplot()
+    _plt.axis([0, windowLength+1, 0, 1.5])
+    #_plt.xlabel('Window Length', fontsize=13)
+    #_plt.ylabel('resolution', fontsize=13)
+    xticks = _np.arange(0, windowLength + 1, 128)
+    ax.set_xticks(xticks)
+    x_label = [r"${%s\pi}$" %(2*w) for w in range(0,len(xticks))]
+    ax.set_xticklabels(x_label)
+    _plt.scatter(*error, c='red', lw=0)
+    _plt.hlines(1, 0, windowLength, color = 'b', linestyle='--')
 
 def ErrorPlotWindow(waveNumber, windowLength, samples=128):
     """ Plot the Errror(mean of the absolute from sine wave - filtered wave)
@@ -83,7 +93,7 @@ def ErrorPlotWindow(waveNumber, windowLength, samples=128):
     """
     time = _np.linspace(0,2,samples)
     data = _np.sin(_np.pi*time*waveNumber)
-    _windowErrorPlotterImpl(data,windowLength)
+    _windowErrorPlotterImpl(data,windowLength, waveNumber)
     
 def ErrorPlotWindowNoised(waveNumber,windowLength,samples = 128):
     """ Plot the Errror(mean of the absolute from sine wave - filtered wave)
