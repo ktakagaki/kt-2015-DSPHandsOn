@@ -109,9 +109,9 @@ def ErrorPlotWindowNoised(waveNumber, windowLength, samples=128):
     """
     time = _np.linspace(0, 2, samples)
     data = _np.sin(_np.pi*time*waveNumber)
-    noise = _np.random.normal(0, 0.5, len(data))
+    noise = _np.random.normal(0, 0.4, len(data))
     data = data + noise
-    _windowErrorPlotterImpl(data, windowLength)
+    _windowErrorPlotterImpl(data, windowLength, waveNumber, samples)
 
 
 def _ErrorRateWave(data, datafiltered, waveNumber):
@@ -153,6 +153,6 @@ def ErrorplotWaveNoised(waveNumber, windowLength, samples=128):
     """
     time = _np.linspace(0, 2, samples)
     data = _np.sin(_np.pi*time*waveNumber)
-    noise = _np.random.normal(0, 0.5, len(data))
+    noise = _np.random.normal(0, 0.2, len(data))
     data = data + noise
-    _waveErrorPlotterImpl(data, waveNumber)
+    _waveErrorPlotterImpl(data, waveNumber, windowLength)
