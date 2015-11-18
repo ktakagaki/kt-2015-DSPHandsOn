@@ -34,15 +34,13 @@ def _medianFilterPlotterImpl(data, windowLength, waveNumber, samples,
     datafiltered = _medianFilter(data, windowLength)
     data = data[plotStart: plotEnd]
     datafiltered = datafiltered[plotStart: plotEnd]
-    fig = _plt.figure()
     ax = _plt.subplot()
     xticks = _np.arange(0, len(data)+1, samples/waveNumber)
     ax.set_xticks(xticks)
     x_label = [r"${%s\pi}$" % (2*w) for w in range(0, len(xticks))]
     ax.set_xticklabels(x_label)
-    _plt.axis([0, len(data), -1.5, 1.5])
-    _plt.xlabel = ('Window lenght = ')# + r'$\frac{\pi}{2}$' + ', S/N = 3')
-    _plt.plot(data,color = 'cornflowerblue', lw = 0.5)
+    _plt.axis([0, len(data), -3, 3])
+    _plt.plot(data, color = 'cornflowerblue', lw = 0.5)
     _plt.plot(data - datafiltered, color = 'r', lw = 0.5)
     _plt.plot(datafiltered, color = 'g', lw = 2.5)
     
@@ -65,7 +63,7 @@ def medianSinPlotNoised(waveNumber, windowLength, samples=128,
     """
     time = _np.linspace(0, 2, samples)
     data = _np.sin(_np.pi*time*waveNumber)
-    noise = _np.random.normal(0, 0.333333333, len(data))
+    noise = _np.random.normal(0, 0.7069341/_np.sqrt(2), len(data))
     data = data + noise
     _medianFilterPlotterImpl(data, windowLength, waveNumber, samples,
                              plotStart, plotEnd)
