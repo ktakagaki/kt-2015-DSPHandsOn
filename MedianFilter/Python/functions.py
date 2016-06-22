@@ -39,10 +39,10 @@ def _medianFilterPlotterImpl(data, windowLength, waveNumber, samples,
     ax.set_xticks(xticks)
     x_label = [r"${%s\pi}$" % (2*w) for w in range(0, len(xticks))]
     ax.set_xticklabels(x_label)
-    _plt.axis([0, len(data), -3, 3])
-    _plt.plot(data, color = 'cornflowerblue', lw = 0.5)
-    _plt.plot(data - datafiltered, color = 'r', lw = 0.5)
-    _plt.plot(datafiltered, color = 'g', lw = 2.5)
+    _plt.axis([0, len(data), -1.5, 1.5])
+    _plt.plot(data, color = 'cornflowerblue', lw = 1.0)
+    _plt.plot(data - datafiltered, color = 'r', lw = 1.5)
+    _plt.plot(datafiltered, color = 'g', lw = 1.0)
     
 
 def medianSinPlot(waveNumber, windowLength, samples=128,
@@ -53,7 +53,7 @@ def medianSinPlot(waveNumber, windowLength, samples=128,
     time = _np.linspace(0, 2, samples)
     # Creating an array with sine waves.
     data = _np.sin(_np.pi*time*waveNumber)
-    _medianFilterPlotterImpl(data, windowLength, plotStart, plotEnd)
+    _medianFilterPlotterImpl(data, windowLength, waveNumber, samples, plotStart, plotEnd)
 
 
 def medianSinPlotNoised(waveNumber, windowLength, samples=128,
