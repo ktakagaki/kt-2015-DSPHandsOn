@@ -8,11 +8,12 @@ Created on Thu Oct 15 10:07:55 2015
 import numpy as _np
 import matplotlib.pylab as _plt
 import scipy.signal as _sps
+from decimal import Decimal as _Decimal
 
 
 def _medianFilter(data, windowLength):
     """Calculate the the median filtered wave with defined window length."""
-    if (windowLength < len(data) and data.ndim == 1):
+    if windowLength < len(data) and data.ndim == 1:
         # Creating an array where the filtered values will be saved in.
         tempret = _np.zeros(len(data))
         # Check if the window length is odd or even because with
@@ -163,3 +164,54 @@ def ErrorplotWaveNoised(waveNumber, windowLength, samples=128):
     noise = _np.random.normal(0, 0.2, len(data))
     data = data + noise
     _waveErrorPlotterImpl(data, waveNumber, windowLength)
+
+
+class similarity:
+
+    def euclideanDistance(self, x, y):
+
+        if len(x) != len(y):
+            raise ValueError("all the input array dimensions must match exactly")
+        # Number rounded to 3 digits from the decimal point.
+        dist = round(_np.sqrt(sum(_np.power(a - b, 2) for a, b in zip(x, y))), 3)
+        return dist
+
+    def manhattanDistance(self, x, y):
+
+        if len(x) != len(y):
+            raise ValueError("all the input array dimensions must match exactly")
+        dist = round(sum(abs(a - b) for a, b in zip(x, y)), 3)
+        return dist
+
+    def cosineSimilarity(self, x, y):
+
+        def _square_rooted( x):
+            temp = round(_np.sqrt(sum(a * a for a in x)), 3)
+            return temp
+
+        if len(x) != len(y):
+            raise ValueError("all the input array dimensions must match exactly")
+        num = sum(a * b for a, b in zip(x, y))
+        denom = _square_rooted(self, x) * _square_rooted(y)
+        sim = round(num / float(denom), 3)
+
+        return sim
+
+    def jaccardSimilarity(self, x, y):
+
+        intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
+        union_cardinality = len(set.union(*[set(x), set(y)]))
+        sim = intersection_cardinality / float(union_cardinality)
+        return sim
+
+    def minkowskiDistance(self, x, y, p_val):
+
+        def _nth_root(value, n_root):
+            root_value = 1 / float(n_root)
+            temp = round(_Decimal(value) ** _Decimal(root_value), 3)
+            return temp
+
+        if len(x) != len((y)):
+            raise ValueError("all the input array dimensions must match exactly")
+        dist = _nth_root(sum(_np.power(abs(a - b), p_val) for a, b in zip(x, y)), p_val)
+        return dist
